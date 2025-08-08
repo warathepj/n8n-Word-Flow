@@ -23,7 +23,7 @@ app.post('/chat', async (req, res) => { // Make the route handler async
   console.log('Received message:', message);
   console.log('Received sessionId:', sessionId);
 
-  const webhookUrl = 'http://localhost:5678/webhook/ef449f84-654e-4120-bcfb-8d3fdcada886';
+  const webhookUrl = 'your-webhook-url';
 
   try {
     // Forward the chat message to the webhook

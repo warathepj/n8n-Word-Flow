@@ -248,7 +248,7 @@
                 webhookMessageDiv.className = 'flex'; // Webhook response on the left
                 webhookMessageDiv.innerHTML = `
                     <div class="other-bubble bubble">
-                        ${JSON.stringify(data, null, 2)}
+                        ${data.output || JSON.stringify(data, null, 2)}
                     </div>
                 `;
                 chat.appendChild(webhookMessageDiv);

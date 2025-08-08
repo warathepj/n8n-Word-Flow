@@ -70,7 +70,7 @@
                     </svg>
                 </div>
                 <div>
-                    <h1 class="text-xl font-semibold">Chat with Alex</h1>
+                    <h1 class="text-xl font-semibold">Word Flow</h1>
                     <p class="text-xs text-gray-400">Online</p>
                 </div>
             </div>
@@ -183,6 +183,51 @@
                 chat.appendChild(newMessage);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }, 2000);
+
+            const messageInput = document.querySelector('input[type="text"]');
+            const sendButton = document.querySelector('button.bg-yellow-500');
+
+            const sendMessage = async () => {
+                const message = messageInput.value.trim();
+                if (message) {
+                    // Append user message to chat display immediately
+                    const chat = document.querySelector('.flex.flex-col.space-y-2');
+                    const userMessageDiv = document.createElement('div');
+                    userMessageDiv.className = 'flex justify-end';
+                    userMessageDiv.innerHTML = `
+                        <div class="user-bubble bubble">
+                            ${message}
+                        </div>
+                    `;
+                    chat.appendChild(userMessageDiv);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                    try {
+                        const response = await fetch('/chat', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ message: message })
+                        });
+                        if (response.ok) {
+                            console.log('Message sent successfully!');
+                        } else {
+                            console.error('Failed to send message:', response.statusText);
+                        }
+                    } catch (error) {
+                        console.error('Error sending message:', error);
+                    }
+                    messageInput.value = ''; // Clear input field
+                }
+            };
+
+            sendButton.addEventListener('click', sendMessage);
+            messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
         });
     </script>
 </body>

@@ -74,6 +74,7 @@
                     <p class="text-xs text-gray-400">Online</p>
                 </div>
             </div>
+            <div id="sessionIdDisplay" class="text-sm text-gray-400 mr-4"></div>
             <button class="p-2 rounded-full hover:bg-gray-800">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -165,6 +166,20 @@
     </div>
     
     <script>
+        // Session ID management
+        let sessionId = sessionStorage.getItem('sessionId');
+        if (!sessionId) {
+            sessionId = Date.now().toString(); // Use timestamp as session ID
+            sessionStorage.setItem('sessionId', sessionId);
+        }
+        console.log('Current Session ID:', sessionId);
+
+        // Display session ID in header
+        const sessionIdElement = document.getElementById('sessionIdDisplay');
+        if (sessionIdElement) {
+            sessionIdElement.textContent = `Session ID: ${sessionId}`;
+        }
+
         // Auto-scroll to bottom of chat
         document.addEventListener('DOMContentLoaded', function() {
             const chatContainer = document.querySelector('.chat-container');
@@ -208,7 +223,7 @@
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({ message: message })
+                            body: JSON.stringify({ message: message, sessionId: sessionId }) // Include sessionId here
                         });
                         if (response.ok) {
                             console.log('Message sent successfully!');
@@ -229,6 +244,7 @@
                 }
             });
         });
+</script>
     </script>
 </body>
 </html>

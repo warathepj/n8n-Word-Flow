@@ -226,15 +226,33 @@
                             body: JSON.stringify({ message: message, sessionId: sessionId }) // Include sessionId here
                         });
                         if (response.ok) {
-                            console.log('Message sent successfully!');
+                            const responseData = await response.json(); // Parse JSON response
+                            console.log('Message sent successfully!', responseData);
+                            displayWebhookResponse(responseData); // Display the webhook response
                         } else {
                             console.error('Failed to send message:', response.statusText);
+                            const errorData = await response.json();
+                            console.error('Error details:', errorData);
                         }
                     } catch (error) {
                         console.error('Error sending message:', error);
                     }
                     messageInput.value = ''; // Clear input field
                 }
+            };
+
+            // Function to display webhook response
+            const displayWebhookResponse = (data) => {
+                const chat = document.querySelector('.flex.flex-col.space-y-2');
+                const webhookMessageDiv = document.createElement('div');
+                webhookMessageDiv.className = 'flex'; // Webhook response on the left
+                webhookMessageDiv.innerHTML = `
+                    <div class="other-bubble bubble">
+                        ${JSON.stringify(data, null, 2)}
+                    </div>
+                `;
+                chat.appendChild(webhookMessageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
             };
 
             sendButton.addEventListener('click', sendMessage);

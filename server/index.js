@@ -30,10 +30,10 @@ app.post('/chat', async (req, res) => { // Make the route handler async
     const webhookResponse = await axios.post(webhookUrl, { message, sessionId });
     console.log('Message forwarded to webhook successfully.');
     console.log('Webhook response:', webhookResponse.data); // Log the webhook response data
-    res.status(200).send('Message received and forwarded');
+    res.status(200).json(webhookResponse.data); // Send the webhook response data back to the client
   } catch (error) {
     console.error('Error forwarding message to webhook:', error.message);
-    res.status(500).send('Error forwarding message');
+    res.status(500).json({ error: 'Error forwarding message', details: error.message }); // Send error details
   }
 });
 

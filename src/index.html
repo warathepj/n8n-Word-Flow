@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Chat UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .grid-bg {
+            background-color: #121212;
+            background-image: 
+                linear-gradient(#2a2a2a 1px, transparent 1px),
+                linear-gradient(90deg, #2a2a2a 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: center center;
+        }
+        
+        .user-bubble {
+            background-color: #FFD700;
+            color: black;
+            border-bottom-right-radius: 0;
+        }
+        
+        .other-bubble {
+            background-color: #F0F0F0;
+            color: black;
+            border-bottom-left-radius: 0;
+        }
+        
+        .bubble {
+            border-radius: 24px;
+            position: relative;
+            max-width: 80%;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .chat-container {
+            height: calc(100vh - 120px);
+        }
+        
+        @media (max-width: 640px) {
+            .bubble {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-100 font-sans">
+    <div class="container mx-auto max-w-4xl p-4">
+        <header class="flex items-center justify-between mb-6">
+            <div class="flex items-center">
+                <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-semibold">Chat with Alex</h1>
+                    <p class="text-xs text-gray-400">Online</p>
+                </div>
+            </div>
+            <button class="p-2 rounded-full hover:bg-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                </svg>
+            </button>
+        </header>
+        
+        <div class="grid-bg rounded-xl overflow-hidden shadow-lg">
+            <div class="chat-container overflow-y-auto p-4">
+                <div class="flex flex-col space-y-2">
+                    <!-- Other person's messages (left) -->
+                    <div class="flex">
+                        <div class="other-bubble bubble">
+                            Hey there! How's it going?
+                        </div>
+                    </div>
+                    
+                    <div class="flex">
+                        <div class="other-bubble bubble">
+                            I was thinking about our project deadline. Do you think we can finish by Friday?
+                        </div>
+                    </div>
+                    
+                    <!-- User's messages (right) -->
+                    <div class="flex justify-end">
+                        <div class="user-bubble bubble">
+                            Hi! I'm doing well, thanks for asking.
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <div class="user-bubble bubble">
+                            About the deadline - I think we can make it if we focus on the core features first.
+                        </div>
+                    </div>
+                    
+                    <div class="flex">
+                        <div class="other-bubble bubble">
+                            That makes sense. What do you think we should prioritize?
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <div class="user-bubble bubble">
+                            The authentication system and main dashboard need to be solid. We can add the analytics later if time runs short.
+                        </div>
+                    </div>
+                    
+                    <div class="flex">
+                        <div class="other-bubble bubble">
+                            Sounds like a plan! I'll work on the backend APIs for those components today.
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <div class="user-bubble bubble">
+                            Great! I'll handle the frontend integration. Let's sync up tomorrow morning.
+                        </div>
+                    </div>
+                    
+                    <div class="flex">
+                        <div class="other-bubble bubble">
+                            Perfect. Talk to you then!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-4 border-t border-gray-800">
+                <div class="flex items-center">
+                    <button class="p-2 rounded-full hover:bg-gray-800 mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                        </svg>
+                    </button>
+                    <input 
+                        type="text" 
+                        placeholder="Type a message..." 
+                        class="flex-1 bg-gray-800 rounded-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    >
+                    <button class="ml-2 p-2 bg-yellow-500 rounded-full hover:bg-yellow-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-scroll to bottom of chat
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatContainer = document.querySelector('.chat-container');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // Simulate receiving a new message
+            setTimeout(() => {
+                const chat = document.querySelector('.flex.flex-col.space-y-2');
+                const newMessage = document.createElement('div');
+                newMessage.className = 'flex';
+                newMessage.innerHTML = `
+                    <div class="other-bubble bubble">
+                        Oh, one more thing - don't forget about the client meeting at 3pm today!
+                    </div>
+                `;
+                chat.appendChild(newMessage);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
